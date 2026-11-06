@@ -1,0 +1,58 @@
+Agence(IdAgence, nom, adresse, telephone, email, login_responsable)
+PRIMARY KEY : IdAgence
+FOREIGN KEY : login_responsable(Agence) fait référence à login(Employé)
+
+Employé(login, nom, prenom, adresse, courriel, telephone, mot_de_passe, IdAgence)
+PRIMARY KEY : login
+FOREIGN KEY : IdAgence(Employé) fait référence à IdAgence(Agence)
+
+Voyage(IdVoyage, cout_par_personne, date_de_debut, date_de_fin, statut, description, login_organisateur)
+PRIMARY KEY : IdVoyage
+FOREIGN KEY : login_organisateur(Voyage) fait référence à login(Employé)
+
+Client(IdClient, nom, prenom, sexe, age, adresse, telephone, courriel, mot_de_passe)
+PRIMARY KEY : IdClient
+
+Pays(IdPays, nom, description)
+PRIMARY KEY : IdPays
+
+Visa(IdVisa, type, prix)
+PRIMARY KEY : IdVisa
+
+Langue(IdLangue, nom)
+PRIMARY KEY : IdLangue
+
+Ville(IdVille, nom, IdPays)
+PRIMARY KEY : IdVille
+FOREIGN KEY : IdPays(Ville) fait référence à IdPays(Pays)
+
+Hébergement(IdHébergement, nom, catégorie, IdVille_hébergement)
+PRIMARY KEY : IdHébergement
+FOREIGN KEY : IdVille_hébergement(Hébergement) fait référence IdVille(Ville)
+
+Etape(IdEtape, date_de_depart, date_arrivée, type_etape, nom_transport, IdVoyage, IdVille_depart, IdVille_arrivée)
+PRIMARY KEY : IdEtape
+FOREIGN KEY : IdVoyage(Etape) fait référence à IdVoyage(Voyage)
+FOREIGN KEY : IdVille_depart(Etape) fait référence à IdVille(Ville)
+FOREIGN KEY : IdVille_arrivée(Etape) fait référence à IdVille(Ville)
+
+réserve(IdVoyage, IdClient, date_res, statut)
+PRIMARY KEY : (IdVoyage,IdClient)
+FOREIGN KEY : IdVoyage(réserve) fait référence à IdVoyage(Voyage)
+FOREIGN KEY : IdClient(réserve) fait référence à IdClient(Client)
+
+nationalité(IdClient,IdPays)
+PRIMARY KEY : (IdClient,IdPays)
+FOREIGN KEY : IdClient(nationalité) fait référence à IdClient(Client)
+FOREIGN KEY : IdPays(nationalité) fait référence à IdPays(Pays)
+
+exige(IdPays_naissance, IdPays_voyage, IdVisa_requis)
+PRIMARY KEY : (IdPays_naissance, IdPays_voyage, IdVisa_requis)
+FOREIGN KEY : IdPays_naissance(exige) fait référence à IdPays(Pays)
+FOREIGN KEY : IdPays_voyage(exige) fait référence à IdPays(Pays)
+FOREIGN KEY : IdVisa_requis(exige) fait référence à IdVisa(Visa)
+
+parle(IdPays, IdLangue_parlée)
+PRIMARY KEY : (IdPays, IdLangue_parlée)
+FOREIGN KEY : IdPays(parle) fait référence à IdPays(Pays)
+FOREIGN KEY : IdLangue_parlée(parle) fait référence à IdLangue(Langue)
